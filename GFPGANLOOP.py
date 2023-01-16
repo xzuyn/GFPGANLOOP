@@ -7,23 +7,23 @@ FINAL_IMAGES = []
 MODEL = "1.4"
 ACCEPTED_MODELS = ["1", "1.2", "1.3", "1.4"]
 FIRSTRUNSCALE = "2"
-MODELinput = None
+MODELinput = ""
 
 
 MODELinput = input("Model (1, 1.2, 1.3, or 1.4) [Default: " + MODEL + "]: ")
 
-if MODELinput is None:
+if MODELinput == "":
     print("Using default model: " + MODEL)
 
 
-if MODELinput is not None:
+if MODELinput != "":
     if MODELinput in ACCEPTED_MODELS:
         MODEL = MODELinput
         print("Using model: " + MODEL)
 
     else:
         print("Invalid model. Using default model: " + MODEL)
-        MODELinput = None
+        MODELinput = ""
 
 
 tic = time.perf_counter()
