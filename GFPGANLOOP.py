@@ -10,6 +10,7 @@ ACCEPTED_MODELS = ["1", "1.2", "1.3", "1.4"]
 FIRSTSCALEFACTOR = "2"
 FSFinput = ""
 LOOPINPUT = "LOOPINPUT"
+LOOPRESULT = "LOOPRESULT"
 FOUNDFACES = False
 
 
@@ -87,13 +88,13 @@ if not len(os.listdir(f"{LOOPINPUT}")) == 0:
     print()
     print(f"Step 1: {FIRSTSCALEFACTOR}x GFPGAN using {MODEL} model.")
     os.system(
-        f"python inference_gfpgan.py -i {LOOPINPUT} -o LOOPTEMP\\LOOPRESULT_{FIRSTSCALEFACTOR}x_{MODEL} -v {MODEL} -s {FIRSTSCALEFACTOR}"
+        f"python inference_gfpgan.py -i {LOOPINPUT} -o LOOPTEMP\\{LOOPRESULT}_{FIRSTSCALEFACTOR}x_{MODEL} -v {MODEL} -s {FIRSTSCALEFACTOR}"
     )
     tocSTEP1 = time.perf_counter()
 
     # Check if a face has been found in any image from the first step.
     if (
-        len(os.listdir(f"LOOPTEMP\\LOOPRESULT_{FIRSTSCALEFACTOR}x_{MODEL}"))
+        len(os.listdir(f"LOOPTEMP\\{LOOPRESULT}_{FIRSTSCALEFACTOR}x_{MODEL}"))
         == 0
     ):
         FOUNDFACES = False
@@ -103,7 +104,7 @@ if not len(os.listdir(f"{LOOPINPUT}")) == 0:
 
     if (
         not len(
-            os.listdir(f"LOOPTEMP\\LOOPRESULT_{FIRSTSCALEFACTOR}x_{MODEL}")
+            os.listdir(f"LOOPTEMP\\{LOOPRESULT}_{FIRSTSCALEFACTOR}x_{MODEL}")
         )
         == 0
     ):
@@ -114,7 +115,7 @@ if not len(os.listdir(f"{LOOPINPUT}")) == 0:
         print()
         print(f"Step 2: {FIRSTSCALEFACTOR}-1x GFPGAN using {MODEL} model.")
         os.system(
-            f"python inference_gfpgan.py -i LOOPTEMP\\LOOPRESULT_{FIRSTSCALEFACTOR}x_{MODEL}\\restored_imgs -o LOOPTEMP\\LOOPRESULT_{FIRSTSCALEFACTOR}-1x_{MODEL} -v {MODEL} -s 1"
+            f"python inference_gfpgan.py -i LOOPTEMP\\{LOOPRESULT}_{FIRSTSCALEFACTOR}x_{MODEL}\\restored_imgs -o LOOPTEMP\\{LOOPRESULT}_{FIRSTSCALEFACTOR}-1x_{MODEL} -v {MODEL} -s 1"
         )
         tocSTEP2 = time.perf_counter()
 
@@ -124,20 +125,20 @@ if not len(os.listdir(f"{LOOPINPUT}")) == 0:
         print()
         print(f"Step 3: {FIRSTSCALEFACTOR}-1-1x GFPGAN using {MODEL} model.")
         os.system(
-            f"python inference_gfpgan.py -i LOOPTEMP\\LOOPRESULT_{FIRSTSCALEFACTOR}-1x_{MODEL}\\restored_imgs -o LOOPTEMP\\LOOPRESULT_{FIRSTSCALEFACTOR}-1-1x_{MODEL} -v {MODEL} -s 1"
+            f"python inference_gfpgan.py -i LOOPTEMP\\{LOOPRESULT}_{FIRSTSCALEFACTOR}-1x_{MODEL}\\restored_imgs -o LOOPTEMP\\{LOOPRESULT}_{FIRSTSCALEFACTOR}-1-1x_{MODEL} -v {MODEL} -s 1"
         )
 
-        if not os.path.exists("LOOPRESULT"):
-            os.makedirs("LOOPRESULT")
+        if not os.path.exists(f"{LOOPRESULT}"):
+            os.makedirs(f"{LOOPRESULT}")
         tocSTEP3 = time.perf_counter()
 
         for RESULTIMAGE in os.listdir(
-            f"LOOPTEMP\LOOPRESULT_{FIRSTSCALEFACTOR}-1-1x_{MODEL}\\restored_imgs"
+            f"LOOPTEMP\\{LOOPRESULT}_{FIRSTSCALEFACTOR}-1-1x_{MODEL}\\restored_imgs"
         ):
             current_name, current_extension = os.path.splitext(RESULTIMAGE)
             shutil.move(
-                f".\LOOPTEMP\LOOPRESULT_{FIRSTSCALEFACTOR}-1-1x_{MODEL}\\restored_imgs\\{current_name}{current_extension}",
-                f".\LOOPRESULT\\{current_name}_{FIRSTSCALEFACTOR}-1-1x_{MODEL}{current_extension}",
+                f".\LOOPTEMP\\{LOOPRESULT}_{FIRSTSCALEFACTOR}-1-1x_{MODEL}\\restored_imgs\\{current_name}{current_extension}",
+                f".\\{LOOPRESULT}\\{current_name}_{FIRSTSCALEFACTOR}-1-1x_{MODEL}{current_extension}",
             )
             PROCESSED_IMAGES.append(str(current_name) + str(current_extension))
             FINAL_IMAGES.append(
@@ -160,7 +161,7 @@ if not len(os.listdir(f"{LOOPINPUT}")) == 0:
         print()
         print("Final Images: ")
         for F_IMGS in FINAL_IMAGES:
-            print(f"LOOPRESULT\\{F_IMGS}")
+            print(f"{LOOPRESULT}\\{F_IMGS}")
 
         print()
         print(
