@@ -90,9 +90,6 @@ print("Final Images: ")
 for F_IMGS in FINAL_IMAGES:
     print(f"LOOPRESULT\\{F_IMGS}")
 
-
-toc = time.perf_counter()
-
 print()
 print(
     f"Step 1: {FIRSTRUNSCALE}x completed in {tocSTEP1 - ticSTEP1:0.4f} seconds."
@@ -103,4 +100,6 @@ print(
 print(
     f"Step 3: {FIRSTRUNSCALE}-1-1x completed in {tocSTEP3 - ticSTEP3:0.4f} seconds."
 )
+
+toc = time.perf_counter()
 print(f"Entire process completed in {toc - tic:0.4f} seconds.")
