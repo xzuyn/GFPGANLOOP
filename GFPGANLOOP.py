@@ -28,24 +28,29 @@ tic = time.perf_counter()
 print()
 if MODELinput == "":
     print(f"Using default model: {MODEL}")
+    print()
 
 if MODELinput != "":
     if MODELinput in ACCEPTED_MODELS:
         MODEL = MODELinput
         print(f"Using model: {MODEL}")
+        print()
         MODELinput = ""
 
     else:
         print(f"Invalid model. Using default model: {MODEL}")
+        print()
         MODELinput = ""
 
 if FSFinput == "":
     print(f"Using default first scaling factor: {FIRSTSCALEFACTOR}")
+    print()
 
 if FSFinput != "":
     if FSFinput.isdigit():
         FIRSTSCALEFACTOR = str(FSFinput)
         print(f"Using first scaling factor: {FIRSTSCALEFACTOR}")
+        print()
         FSFinput = ""
 
     elif isFloat(FSFinput) == True:
@@ -56,12 +61,14 @@ if FSFinput != "":
 
         FIRSTSCALEFACTOR = str(int(float(FSFinput)))
         print(f"Using first scaling factor: {FIRSTSCALEFACTOR}")
+        print()
         FSFinput = ""
 
     else:
         print(
             f"Invalid scaling factor. Using default first scaling factor: {FIRSTSCALEFACTOR}"
         )
+        print()
         FSFinput = ""
 
 # Step 1. 2x GFPGAN.
