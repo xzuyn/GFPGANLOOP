@@ -29,6 +29,9 @@ if MODELinput != "":
 
 # Step 1. 2x GFPGAN.
 ticSTEP1 = time.perf_counter()
+print()
+print()
+print("Step 1: " + FIRSTRUNSCALE + "x GFPGAN using " + MODEL + " model.")
 os.system(
     "python inference_gfpgan.py -i LOOPINPUT -o LOOPTEMP\\LOOPRESULT-2x_"
     + MODEL
@@ -41,6 +44,9 @@ tocSTEP1 = time.perf_counter()
 
 # Step 2. 2x-1x GFPGAN.
 ticSTEP2 = time.perf_counter()
+print()
+print()
+print("Step 2: " + FIRSTRUNSCALE + "x-1x GFPGAN using " + MODEL + " model.")
 os.system(
     "python inference_gfpgan.py -i LOOPTEMP\\LOOPRESULT-2x_"
     + MODEL
@@ -54,6 +60,9 @@ tocSTEP2 = time.perf_counter()
 
 # Step 3. 2x-1x-1x GFPGAN.
 ticSTEP3 = time.perf_counter()
+print()
+print()
+print("Step 3: " + FIRSTRUNSCALE + "x-1x-1x GFPGAN using " + MODEL + " model.")
 os.system(
     "python inference_gfpgan.py -i LOOPTEMP\\LOOPRESULT-2x-1x_"
     + MODEL
@@ -93,8 +102,6 @@ for RESULTIMAGE in os.listdir(
 
 shutil.rmtree(".\LOOPTEMP")
 
-toc = time.perf_counter()
-
 print("------")
 print()
 print()
@@ -107,6 +114,9 @@ print()
 print("Final Images: ")
 for F_IMGS in FINAL_IMAGES:
     print("LOOPRESULT\\" + F_IMGS)
+
+
+toc = time.perf_counter()
 
 print()
 print(f"Step 1: 2x completed in {tocSTEP1 - ticSTEP1:0.4f} seconds.")
